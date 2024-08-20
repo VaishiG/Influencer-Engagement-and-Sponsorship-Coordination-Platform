@@ -8,7 +8,7 @@ The platform addresses the need for efficient coordination and engagement betwee
 
 ## Approach
 
-Requirement Analysis
+#### Requirement Analysis
 
 Defined Goals: Facilitate seamless engagement between influencers and sponsors.
 
@@ -21,7 +21,7 @@ Specified Core Features: Campaign creation, ad requests, negotiation, profile ma
 
 Architecture: Web-based architecture to ensure accessibility and scalability.
 
-Technology Stack:
+#### Technology Stack:
 
 Frontend: HTML, CSS (custom styling), JavaScript.
 
