@@ -1,0 +1,62 @@
+<!-- templates/admin_info.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Info</title>
+    <link rel="stylesheet" href="/static/css/admin_dashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <header>
+        <h1><b>ADMIN DASHBOARD</b></h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('admin_info') }}">Info</a></li>
+                <li><a href="{{ url_for('admin_stats') }}">Stats</a></li>
+                <li><a href="{{ url_for('admin_find') }}">Find</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2><b>Ongoing Campaigns</b></h2>
+        <ul>
+            {% for campaign in campaigns %}
+                <li>
+                    <strong>{{ campaign.name }}</strong><br>
+                    {{ campaign.description }}<br>
+                    Start Date: {{ campaign.start_date }}<br>
+                    End Date: {{ campaign.end_date }}<br>
+                    Budget: {{ campaign.budget }}<br>
+                    Visibility: {{ campaign.visibility }}<br>
+                    Goals: {{ campaign.goals }}<br>
+                    {% if campaign.flagged %}
+                        <span style="color: red;">Flagged</span><br>
+                        <form method="POST" action="{{ url_for('unflag_campaign') }}">
+                            <input type="hidden" name="campaign_id" value="{{ campaign.campaign_id }}">
+                            <button type="submit">Unflag</button>
+                        </form>
+                    {% else %}
+                        <span style="color: green;">Not Flagged</span><br>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <br>
+        
+        <h2><b>Flagged Users</b></h2>
+        <ul>
+            {% for flagged_user, user in flagged_users %}
+                <li>
+                    {{ user.name }}- {{ flagged_user.reason }}
+                    <form method="POST" action="{{ url_for('unflag_user') }}">
+                        <input type="hidden" name="user_id" value="{{ user.user_id }}">
+                        <button type="submit">Unflag</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
+</body>
+</html>

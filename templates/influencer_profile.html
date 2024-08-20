@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Influencer Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>INFLUENCER DASHBOARD</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('influencer_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('influencer_find') }}">Find</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Profile</h2>
+        <div class="profile-section">
+            <div class="profile-pic">
+                <form method="POST" action="{{ url_for('update_profile_pic') }}" enctype="multipart/form-data">
+                    {% if influencer.profile_pic %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ influencer.profile_pic) }}" alt="Profile Picture">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='uploads/default_profile_pic.jpg') }}" alt="Default Profile Picture">
+                    {% endif %}
+                    <label for="profile_pic">Update Profile Picture:</label>
+                    <input type="file" id="profile_pic" name="profile_pic">
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+
+            <div class="profile-details">
+                <p><strong>Name: </strong> {{ user.name }}</p>
+                <p><strong>Username: </strong> {{ user.username }}</p>
+                <p><strong>Email: </strong> {{ user.email }}</p>
+                <p><strong>Category: </strong> {{ influencer.category }}</p>
+                <p><strong>Niche: </strong> {{ influencer.niche }}</p>
+                <p><strong>Reach: </strong> {{ influencer.reach }}</p>
+                <button id="edit-profile-button">Edit Profile</button>
+            </div>
+        </div>
+
+        <div id="edit-profile-form" style="display:none; margin-top: 20px;">
+            <form method="POST" action="{{ url_for('edit_profile') }}">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{ user.name }}" required>
+
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category" value="{{ influencer.category }}" required>
+
+                <label for="niche">Niche:</label>
+                <input type="text" id="niche" name="niche" value="{{ influencer.niche }}" required>
+
+                <label for="reach">Reach:</label>
+                <input type="number" id="reach" name="reach" value="{{ influencer.reach }}" required>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+
+        <h2>Active Campaigns</h2>
+        {% if active_campaigns %}
+            <div class="campaign-section">
+                {% for campaign in active_campaigns %}
+                    <div>
+                        <h3>{{ campaign.name }}</h3>
+                        {{ campaign.description }}<br>
+                        Start Date: {{ campaign.start_date }}<br>
+                        End Date: {{ campaign.end_date }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No active campaigns</p>
+        {% endif %}
+        
+        <br>
+        <h2>New Requests</h2>
+        <ul>
+            {% if new_requests %}
+                {% for ad_request in new_requests %}
+                    <li>
+                        <strong>Campaign: {{ ad_request.campaign.name }}</strong><br>
+                        Ad Name: {{ ad_request.ad_name }}<br>
+                        Requirements: {{ ad_request.requirements }}<br>
+                        Payment: {{ ad_request.payment_amountt }}<br>
+                        {% if ad_request.negotiation_terms %}
+                            Negotiation Terms: {{ ad_request.negotiation_terms }}<br>
+                        {% endif %}
+                        <h3>Messages</h3>
+                        <ul>
+                            {% for message in ad_request.messages %}
+                                <li>
+                                    <strong>{{ message.sender.name }}:</strong> {{ message.message }}<br>
+
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        
+                        <form method="POST" action="{{ url_for('respond_to_ad_request', ad_request_id=ad_request.ad_request_id) }}">
+                            <label for="status">Status:</label>
+                            <select name="status" required>
+                                <option value="Accepted">Accept</option>
+                                <option value="Rejected">Reject</option>
+                            </select>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <p>No New Requests </p>
+            {% endif %}
+        </ul>
+
+        <script>
+            document.getElementById('edit-profile-button').onclick = function() {
+                var form = document.getElementById('edit-profile-form');
+                if (form.style.display === 'none') {
+                    form.style.display = 'block';
+                } else {
+                    form.style.display = 'none';
+                }
+            };
+        </script>
+    </main>
+</body>
+</html>
+

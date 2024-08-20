@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Ad Request</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/css/dashboard.css'>
+</head>
+<body>
+    <header>
+        <h1>SPONSOR DASHBOARD</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('sponsor_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('sponsor_campaigns') }}">Campaigns</a></li>
+                <li><a href="{{ url_for('search_influencers') }}">Find</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Update Ad Request</h2>
+        <form method="post" id="update-ad-request-form" action="{{ url_for('update_ad_request', ad_request_id=ad_request.ad_request_id) }}">
+        
+            <label for="requirements">Requirements:</label>
+            <textarea id="requirements" name="requirements" value="{{ ad_request.requirements }}"></textarea><br>
+            
+            <label for="payment_amt">Payment Amount:</label>
+            <input type="text" id="payment_amount" name="payment_amount" value="{{ ad_request.payment_amount }}"><br>
+            
+            <label for="status">Status: </label>
+                <select name="status" id="status" required>
+                    <option value="Pending" {% if ad_request.status == 'Pending' %} selected {% endif %}>Pending</option>
+                    <option value="Accepted" {% if ad_request.status == 'Accepted' %} selected {% endif %}>Accepted</option>
+                    <option value="Rejected" {% if ad_request.status == 'Rejected' %} selected {% endif %}>Rejected</option>
+                </select>
+                
+            <button type="submit">Update</button>
+        </form>
+    </main>
+    
+</body>
+</html>

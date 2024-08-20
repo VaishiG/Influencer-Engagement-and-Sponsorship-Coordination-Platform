@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Influencer Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>INFLUENCER DASHBOARD</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('influencer_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('influencer_find') }}">Find</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Find Campaigns</h2>
+        <form method="get" action="{{ url_for('influencer_find')}}">
+            <label for="campaign_name">Campaign Name: </label>
+            <input type="text" name="campaign_name" id="campaign_name">
+
+            <label for="budget">Budget: </label>
+            <input type="number" name="budget" id="budget">
+            <button type="submit">Search</button>
+        </form>
+
+        {% if campaigns %}
+            <ul>
+                {% for campaign in campaigns %}
+                    <li>
+                        <strong>{{ campaign.name }}</strong><br>
+                        {{ campaign.description }}<br>
+                        Start Date: {{campaign.start_date}}<br>
+                        End Date: {{campaign.end_date}}<br>
+                        Budget: {{campaign.budget}}<br>
+                        Goals: {{campaign.goals}}<br>
+                        <form method="post" action="{{ url_for('apply_for_campaign', campaign_id=campaign.campaign_id) }}">
+                            <button type="submit">Apply</button>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No campaign found. Please refine your search criteria.</p>
+        {% endif %}
+    </main>
+</body>
+</html>
+
+

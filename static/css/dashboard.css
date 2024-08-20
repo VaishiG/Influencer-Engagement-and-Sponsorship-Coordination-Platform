@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #FFCBCB;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #102C57;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 2rem;
+}
+
+main h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: #102C57; 
+    border-bottom: 2px solid #1679AB; 
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+main ul li {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+main ul li:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+main p {
+    margin-bottom: 1rem;
+}
+
+main ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+main ul li strong {
+    font-size: 1.2rem;
+    color: #102C57;
+}
+
+
+
+/* Profile section */
+.profile-section {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-pic {
+    margin-right: 2rem;
+    text-align: center;
+}
+
+.profile-pic img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.profile-pic label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.profile-pic input[type="file"] {
+    margin-bottom: 1rem;
+}
+
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile-details p {
+    margin-bottom: 1rem;
+}
+
+.profile-details p strong {
+    color: #102C57;
+}
+
+
+/* Form Styles */
+form {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form div, form label, form textarea, form input, form select {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+form label {
+    font-weight: bold;
+    color: #102C57;
+}
+
+form input, form textarea, form select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    appearance: none; /* Standardized version for other browsers */
+    padding: 0.5em; /* Example padding adjustment */
+    border: 1px solid #ccc; /* Example border style */
+    /* Add any other styles you need */
+}
+
+form select {
+    height: 2.5rem;
+    background-color: #fff;
+}
+
+form button {
+    background-color: #102C57;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #1679AB;
+}
+
+button {
+    background-color: #102C57;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1679AB;
+}
+
+.campaign-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.campaign-item {
+    margin-bottom: 1.5rem;
+}
+
+.campaign-item:last-child {
+    margin-bottom: 0;
+}
+
+.campaign-item strong {
+    font-size: 1.2rem;
+    color: #102C57;
+}
+
+.campaign-item p {
+    margin: 0.5rem 0;
+    color: #555;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sponsors Dashboard - Campaigns</title>
+        <link rel="stylesheet" href="/static/css/sponsor_dashboard.css">
+    </head>
+    <body>
+        <header>
+            <h1>SPONSORS DASHBOARD</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('sponsor_profile')}}">Profile</a></li>
+                    <li><a href="{{ url_for('sponsor_campaigns')}}">Campaigns</a></li>
+                    <li><a href="{{ url_for('search_influencers')}}">Find</a></li>
+                    <li><a href="{{ url_for('logout')}}">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <h2>Campaigns</h2>
+            <a href="{{ url_for('add_campaign')}}">Add Campaign</a>
+            <ul>
+                {% for campaign in campaigns %}
+                    <div class="campaign-card">
+                        <li>
+                            <h3>{{ campaign.name }}</h3><br>
+                            {{ campaign.description }}<br>
+                            Start Date: {{ campaign.start_date }}<br>
+                            End Date: {{ campaign.end_date }}<br>
+                            Budget: {{ campaign.budget }}<br>
+                            Visibility: {{ campaign.visibility }}<br>
+                            Goals: {{ campaign.goals }}<br>
+                            <a href="{{ url_for('add_ad_request', campaign_id=campaign.campaign_id) }}">Create Ad Request</a> |
+                            <a href="{{ url_for('update_campaign', campaign_id=campaign.campaign_id) }}">Edit</a> |
+                            <a href="{{ url_for('delete_campaign', campaign_id=campaign.campaign_id) }}" onclick="return confirm('Are you sure you want to delete this campaign?');">Delete</a>
+                        </li>
+                            
+                        <h4>AD REQUESTS</h4>
+                        <ul>
+                            {% for ad_request in campaign_ad_requests[campaign.campaign_id] %}
+                                <li>
+                                    <strong>{{ ad_request.ad_name }}</strong><br>
+                                    Requirements: {{ ad_request.requirements }}<br>
+                                    Payment Amount: {{ ad_request.payment_amount }}<br>
+                                    Status: {{ ad_request.status }}<br>
+                                    <a href="{{ url_for('update_ad_request', ad_request_id=ad_request.ad_request_id) }}">Edit</a> |
+                                    <a href="{{ url_for('delete_ad_request', ad_request_id=ad_request.ad_request_id) }}" onclick="return confirm('Are you sure you want to delete this ad request?');">Delete</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </ul>
+        </main>
+    </body>
+</html>

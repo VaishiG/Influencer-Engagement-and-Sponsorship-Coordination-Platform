@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Register Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/css/style.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <main>
+        <h2>REGISTER</h2>
+        <form id="registerForm" method="POST" action="{{ url_for('register') }}">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required pattern="^[a-zA-Z0-9]{5,}$" title="Minimum 5 alphanumeric characters">
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" required minlength="6" title="Password must be at least 6 characters long">
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" required title="Please enter a valid email">
+
+            <label for="name">Full Name:</label>
+            <input type="text" name="name" required title="Full name is required">
+
+            <div class="select-container">
+                <label for="user_type">I am a: </label>
+                <select id="user_type" name="user_type" required>
+                    <option value="">Select</option>
+                    <option value="Sponsor">Sponsor</option>
+                    <option value="Influencer">Influencer</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+
+            <div id="sponsor-fields" class="hidden">
+                <label for="company_name">Company Name:</label>
+                <input type="text" id="company_name" name="company_name"><br>
+    
+                <label for="industry">Industry:</label>
+                <input type="text" id="industry" name="industry"><br>
+    
+                <label for="budget">Budget:</label>
+                <input type="number" id="budget" name="budget" min="0"><br>
+            </div>
+    
+            <div id="influencer-fields" class="hidden">
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category"><br>
+    
+                <label for="niche">Niche:</label>
+                <input type="text" id="niche" name="niche"><br>
+    
+                <label for="reach">Reach:</label>
+                <input type="number" id="reach" name="reach" min="0"><br>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('user_type').addEventListener('change', function () {
+            var sponsorFields = document.getElementById('sponsor-fields');
+            var influencerFields = document.getElementById('influencer-fields');
+            var companyName = document.getElementById('company_name');
+            var industry = document.getElementById('industry');
+            var budget = document.getElementById('budget');
+            var category = document.getElementById('category');
+            var niche = document.getElementById('niche');
+            var reach = document.getElementById('reach');
+            
+            if (this.value === 'Sponsor') {
+                sponsorFields.style.display = 'block';
+                influencerFields.style.display = 'none';
+                companyName.required = true;
+                industry.required = true;
+                budget.required = true;
+                category.required = false;
+                niche.required = false;
+                reach.required = false;
+            } else if (this.value === 'Influencer') {
+                sponsorFields.style.display = 'none';
+                influencerFields.style.display = 'block';
+                companyName.required = false;
+                industry.required = false;
+                budget.required = false;
+                category.required = true;
+                niche.required = true;
+                reach.required = true;
+            } else {
+                sponsorFields.style.display = 'none';
+                influencerFields.style.display = 'none';
+                companyName.required = false;
+                industry.required = false;
+                budget.required = false;
+                category.required = false;
+                niche.required = false;
+                reach.required = false;
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            var username = document.getElementsByName('username')[0];
+            var password = document.getElementsByName('password')[0];
+            var email = document.getElementsByName('email')[0];
+            var userType = document.getElementsByName('user_type')[0];
+            var companyName = document.getElementById('company_name');
+            var industry = document.getElementById('industry');
+            var budget = document.getElementById('budget');
+            var category = document.getElementById('category');
+            var niche = document.getElementById('niche');
+            var reach = document.getElementById('reach');
+
+            username.setCustomValidity('');
+            password.setCustomValidity('');
+            email.setCustomValidity('');
+            userType.setCustomValidity('');
+            companyName.setCustomValidity('');
+            industry.setCustomValidity('');
+            budget.setCustomValidity('');
+            category.setCustomValidity('');
+            niche.setCustomValidity('');
+            reach.setCustomValidity('');
+
+            if (!username.validity.valid) {
+                username.setCustomValidity('Username must be at least 5 alphanumeric characters');
+                username.reportValidity();
+                event.preventDefault();
+            }
+
+            if (password.value.length < 6) {
+                password.setCustomValidity('Password must be at least 6 characters long');
+                password.reportValidity();
+                event.preventDefault();
+            }
+
+            if (!email.validity.valid) {
+                email.setCustomValidity('Please enter a valid email');
+                email.reportValidity();
+                event.preventDefault();
+            }
+
+            if (!userType.value) {
+                userType.setCustomValidity('Please select a user type');
+                userType.reportValidity();
+                event.preventDefault();
+            }
+
+            if (userType.value === 'Sponsor') {
+                if (!companyName.value || !industry.value || budget.value < 0) {
+                    companyName.setCustomValidity('Please fill in all Sponsor fields correctly');
+                    industry.setCustomValidity('Please fill in all Sponsor fields correctly');
+                    budget.setCustomValidity('Please fill in all Sponsor fields correctly');
+                    companyName.reportValidity();
+                    industry.reportValidity();
+                    budget.reportValidity();
+                    event.preventDefault();
+                }
+            }
+
+            if (userType.value === 'Influencer') {
+                if (!category.value || !niche.value || reach.value < 0) {
+                    category.setCustomValidity('Please fill in all Influencer fields correctly');
+                    niche.setCustomValidity('Please fill in all Influencer fields correctly');
+                    reach.setCustomValidity('Please fill in all Influencer fields correctly');
+                    category.reportValidity();
+                    niche.reportValidity();
+                    reach.reportValidity();
+                    event.preventDefault();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

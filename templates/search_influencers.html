@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Influencers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/dashboard.css') }}">
+</head>
+<body>
+    <header>
+        <h1>SPONSORS DASHBOARD</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('sponsor_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('sponsor_campaigns') }}">Campaigns</a></li>
+                <li><a href="{{ url_for('search_influencers') }}">Find</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Find Influencers</h2>
+        <form method="POST" action="{{ url_for('search_influencers') }}">
+            <div>
+                <label for="niche">Niche:</label>
+                <input type="text" name="niche" placeholder="e.g., Fitness, Technology">
+            </div>
+            <div>
+                <label for="reach">Reach:</label>
+                <input type="number" name="reach" placeholder="e.g., 1000">
+            </div>
+            <div>
+                <label for="category">Category:</label>
+                <input type="text" name="category" placeholder="e.g., Lifestyle, Education">
+            </div>
+            <button type="submit">Search</button>
+        </form>
+        <br>
+
+        <div class="influencer-section">
+            {% if influencers %}
+            <h2>Influencers</h2>
+            <ul>
+                {% for influencer, user in influencers %}
+                    <li class="influencer-card">
+                        <strong>{{ user.name }}</strong><br>
+                        <p>Niche: {{ influencer.niche }}</p>
+                        <p>Reach: {{ influencer.reach }}</p>
+                        <p>Category: {{ influencer.category }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p>No influencers found matching the criteria.</p>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

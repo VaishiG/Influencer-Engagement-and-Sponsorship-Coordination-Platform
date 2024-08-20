@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Campaign</title>
+    <link rel='stylesheet' type='text/css' media='screen' href='/static/css/dashboard.css'>
+</head>
+<body>
+    <header>
+        <h1>SPONSOR DASHBOARD</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('sponsor_profile')}}">Profile</a></li>
+                <li><a href="{{ url_for('sponsor_campaigns')}}">Campaigns</a></li>
+                <li><a href="{{ url_for('search_influencers')}}">Find</a></li>
+                <li><a href="{{ url_for('logout')}}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Update Campaign</h2>
+        <form id="update-campaign-form" method="post" action="{{url_for('update_campaign', campaign_id=campaign.campaign_id) }}">
+            <label for="name">Campaign Name:</label>
+            <input type="text" id="name" name="name" value="{{ campaign.name }}"><br>
+            
+            <label for="description">Description:</label>
+            <textarea id="description" name="description">{{ campaign.description }}</textarea><br>
+            
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" value="{{ campaign.start_date }}"><br>
+            
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" value="{{ campaign.end_date }}"><br>
+            
+            <label for="budget">Budget:</label>
+            <input type="text" id="budget" name="budget" value="{{ campaign.budget }}"><br>
+            
+            <label for="visibility">Visibility: </label>
+            <select id="visibility" name="visibility" required>
+                <option value="Public" {% if campaign.visibility == 'Public' %} selected {% endif %}>Public</option>
+                <option value="Private" {% if campaign.visibility == 'Private' %} selected {% endif %}>Private</option>
+            </select>
+            
+            <label for="goals">Goals:</label>
+            <textarea id="goals" name="goals">{{ campaign.goals }}</textarea><br>
+            
+            <button type="submit">Update</button>
+        </form>
+    </main>
+</body>
+</html>

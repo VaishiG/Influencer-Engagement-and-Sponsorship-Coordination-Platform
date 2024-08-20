@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sponsors Dashboard - Profile</title>
+    <link rel="stylesheet" href="/static/css/sponsor_dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>SPONSORS DASHBOARD</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('sponsor_profile')}}">Profile</a></li>
+                <li><a href="{{ url_for('sponsor_campaigns')}}">Campaigns</a></li>
+                <li><a href="{{ url_for('search_influencers')}}">Find</a></li>
+                <li><a href="{{ url_for('logout')}}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Profile</h2>
+        <div class="profile-section">
+            <p><strong>Company Name : </strong>{{sponsor.company_name}}</p>
+            <p><strong>Industry : </strong>{{sponsor.industry}}</p>
+            <p><strong>Budget : </strong>{{sponsor.budget}}</p>
+        </div>
+        
+        <h2>Active Campaigns</h2>
+        {% if active_campaigns %}
+            <div class="campaigns-section">
+                <ul>
+                    {% for campaign in active_campaigns%}
+                        <li>
+                            <strong>{{campaign.name}}</strong>
+                            {{campaign.description}}<br>
+                            Start Date: {{campaign.start_date}}<br>
+                            End Date: {{campaign.end_date}}<br>
+                            Budget: {{campaign.budget}}<br>
+                            Visibility: {{campaign.visibility}}<br>
+                            Goals: {{campaign.goals}}<br>
+        
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>No active Campaigns</p>
+        {% endif %}
+
+        <h2>New Requests</h2>
+        {% if new_requests %}
+            <div class="requests-section">
+                <ul>
+                    {% for request in new_requests %}
+                        <li>
+                            <strong>Campaign:</strong> {{ request.campaign.name }}<br>
+                            <strong>Influencer ID:</strong> {{ request.influencer_id }}<br>
+                            <strong>Status:</strong> {{ request.status }}<br>
+                            <form method="post" action="{{ url_for('update_ad_request_status', request_id=request.ad_request_id) }}">
+                                <select name="status">
+                                    <option value="Accepted">Accept</option>
+                                    <option value="Rejected">Reject</option>
+                                </select>
+                                <button type="submit">Update</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>No New Requests</p>
+        {% endif %}
+        
+    </main>
+</body>
+</html>

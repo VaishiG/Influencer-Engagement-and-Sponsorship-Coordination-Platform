@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Ad Request</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>SPONSOR DASHBOARD</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('sponsor_profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('sponsor_campaigns') }}">Campaigns</a></li>
+                <li><a href="{{ url_for('search_influencers') }}">Find</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Create New Ad Request</h2>
+        <form method="POST" action="{{ url_for('add_ad_request', campaign_id=campaign.campaign_id) }}">
+            <div>
+                <label for="influencer_id">Select Influencer:</label>
+                <select name="influencer_id" required>
+                    {% for influencer in influencers %}
+                    <option value="{{ influencer.user.user_id }}">{{ influencer.user.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <label for="ad_name">Ad Name:</label>
+            <input type="text" name="ad_name" required><br>
+
+            <label for="requirements">Requirements:</label>
+            <textarea name="requirements" required></textarea><br>
+
+            <label for="payment_amount">Payment Amount:</label>
+            <input type="number" name="payment_amount" required><br>
+
+            <label for="status">Status: </label>
+            <select name="status" required>
+                <option value="Pending">Pending</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+
+            <label for="negotiation_terms">Negotiation Terms:</label>
+            <input type="text" name="negotiation_terms" required><br>
+
+            <label for="message">Message:</label>
+            <textarea name="message" required></textarea><br>
+
+            <button type="submit">Add Request</button>
+
+        </form>
+    </main>
+</body>
+</html>
